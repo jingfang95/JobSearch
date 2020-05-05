@@ -15,6 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="edu.utap.jobsearch"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
@@ -28,6 +37,10 @@
         <activity android:name=".AuthInitActivity"> </activity>
         <activity android:name=".ui.home.OneCompany"
             android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".ui.profile.AccountManager"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

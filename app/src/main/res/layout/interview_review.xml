@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,28 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp" >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1"
-            android:text="Rate the Overall Experience:" />
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:rating="1"
-            android:stepSize="1"
-            android:numStars="5"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -175,6 +156,11 @@
             android:layout_weight="1"
             android:paddingStart="10dp"
             android:text="Anonymous?" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Submit"/>
 
     </LinearLayout>
 

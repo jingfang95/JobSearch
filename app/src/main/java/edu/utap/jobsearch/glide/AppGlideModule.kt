@@ -12,6 +12,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.storage.StorageReference
 import edu.utap.jobsearch.R
 
 
@@ -58,6 +59,20 @@ object Glide {
                 GlideApp.with(imageView.context)
                     .asBitmap()
                     .load(R.drawable.ic_company_black_24dp)
+                    .apply(glideOptions)
+            )
+            .into(imageView)
+    }
+
+    fun fetch(storageReference: StorageReference, imageView: ImageView) {
+        GlideApp.with(imageView.context)
+            .asBitmap()
+            .load(storageReference)
+            .apply(glideOptions)
+            .error(
+                GlideApp.with(imageView.context)
+                    .asBitmap()
+                    .load(R.drawable.ic_account_black_24dp)
                     .apply(glideOptions)
             )
             .into(imageView)
