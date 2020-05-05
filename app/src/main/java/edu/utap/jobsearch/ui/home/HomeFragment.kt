@@ -47,6 +47,9 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         initAdapter(root)
         val actionSearch = root.findViewById<EditText>(R.id.actionSearch)
+        viewModel.searchTerm.apply {
+            value = ""
+        }
         actionSearch?.setOnEditorActionListener { _, i, keyEvent ->
             if ( (keyEvent != null
                 && (keyEvent.action == KeyEvent.ACTION_DOWN)

@@ -19,6 +19,7 @@
             android:layout_weight="1"
             android:text="Company Name:" />
         <EditText
+            android:id="@+id/companyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -40,6 +41,7 @@
             android:text="Rate the Interview Difficulty:" />
 
             <RatingBar
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -56,6 +58,7 @@
         android:text="Job Title:" />
 
     <EditText
+        android:id="@+id/reviewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -76,6 +79,7 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
         <CheckBox
+            android:id="@+id/cb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -85,6 +89,7 @@
             android:text="Phone Screen"/>
 
         <CheckBox
+            android:id="@+id/cb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -94,6 +99,7 @@
             android:text="1:1"/>
 
         <CheckBox
+            android:id="@+id/cb3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -119,6 +125,7 @@
         android:text="Interview Questions:" />
 
     <EditText
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -135,6 +142,7 @@
         android:text="Other Comments:" />
 
     <EditText
+        android:id="@+id/comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -147,16 +155,13 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:orientation="horizontal">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+        <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="10dp"
-            android:text="Anonymous?" />
+            android:layout_weight="3"/>
+
         <Button
+            android:id="@+id/submitBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="false"

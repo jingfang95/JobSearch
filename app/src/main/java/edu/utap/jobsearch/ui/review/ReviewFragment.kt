@@ -32,25 +32,11 @@ class ReviewFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_review, container, false)
-//        val rating = root.findViewById<RatingBar>(R.id.company_rating)
-//        val ratingText = root.findViewById<TextView>(R.id.rating_text)
-//        rating.setOnRatingBarChangeListener { _, fl, _ ->
-//            ratingText.text = when (fl) {
-//                0f -> "Choose Rating"
-//                1f -> "Very Dissatisfied"
-//                2f -> "Dissatisfied"
-//                3f -> "Neutral"
-//                4f -> "Satisfied"
-//                else -> "Very Satisfied"
-//            }
-//        }
+
         this.requireActivity().supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_fragment, InterviewFragment())
             .commit()
-//        val stub = root.findViewById<ViewStub>(R.id.layout_stub)
-//        stub.layoutResource = R.layout.interview_review
-//        stub.inflate()
 
         val interview = root.findViewById<Button>(R.id.interview_selection)
         val interviewSelected = root.findViewById<TextView>(R.id.interview_line)

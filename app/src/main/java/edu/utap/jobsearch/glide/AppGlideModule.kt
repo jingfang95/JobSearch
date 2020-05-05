@@ -7,13 +7,17 @@ import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.StorageReference
 import edu.utap.jobsearch.R
+import java.io.InputStream
+import com.firebase.ui.storage.images.FirebaseImageLoader
 
 
 @GlideModule
@@ -24,6 +28,14 @@ class AppGlideModule : AppGlideModule() {
     }
     override fun isManifestParsingEnabled(): Boolean {
         return false
+    }
+
+    override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+        // Register FirebaseImageLoader to handle StorageReference
+        registry.append(
+            StorageReference::class.java, InputStream::class.java,
+            FirebaseImageLoader.Factory()
+        )
     }
 }
 

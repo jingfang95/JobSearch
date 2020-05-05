@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:text="Company Name:" />
         <EditText
+            android:id="@+id/companyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -57,6 +58,7 @@
         android:text="Review Title:" />
 
     <EditText
+        android:id="@+id/reviewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -78,6 +80,7 @@
         android:paddingEnd="15dp"
         android:paddingBottom="5dp">
         <CheckBox
+            android:id="@+id/cb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -86,6 +89,7 @@
             android:layout_weight="1"
             android:text="Full Time"/>
         <CheckBox
+            android:id="@+id/cb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -95,6 +99,7 @@
             android:text="Part Time"/>
 
         <CheckBox
+            android:id="@+id/cb3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -104,6 +109,7 @@
             android:text="Contract"/>
 
         <CheckBox
+            android:id="@+id/cb4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -126,32 +132,17 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="10dp"
-        android:text="Pros: " />
+        android:text="Pros or Cons: " />
 
     <EditText
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:scrollbars="vertical"
         android:layout_weight="1"
-        android:hint="Share some of the best reasons." />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Cons: " />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:scrollbars="vertical"
-        android:layout_weight="1"
-        android:hint="Share some of the downsides." />
+        android:hint="Share some of the best reasons or downsides." />
 
     <TextView
         android:layout_width="match_parent"
@@ -161,6 +152,7 @@
         android:text="Other Comments:" />
 
     <EditText
+        android:id="@+id/comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -173,16 +165,13 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:orientation="horizontal">
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
+        <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="10dp"
-            android:text="Anonymous?" />
+            android:layout_weight="3"/>
+
         <Button
+            android:id="@+id/submitBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="false"

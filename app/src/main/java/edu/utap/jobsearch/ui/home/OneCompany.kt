@@ -1,5 +1,7 @@
 package edu.utap.jobsearch.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.Html
@@ -30,7 +32,52 @@ class OneCompany: AppCompatActivity() {
         one_job_title.text = activityThatCalled.extras?.getString("postTitle")
         one_company_name.text = activityThatCalled.extras?.getString("postCompany")
         one_job_location.text = activityThatCalled.extras?.getString("postLocation")
-        description_box.text = Html.fromHtml(activityThatCalled.extras?.getString("postDescription"))
-        description_box.movementMethod = ScrollingMovementMethod()
+//        descriptionText = activityThatCalled.extras?.getString("postDescription")
+        val b = Bundle()
+        b.putString("postDescription", activityThatCalled.extras?.getString("postDescription"))
+        val frag = DescriptionFragment()
+        frag.arguments = b
+
+        //
+        val c = Bundle()
+        c.putString("name", activityThatCalled.extras?.getString("postCompany"))
+        val cfrag = CompanyReviewFragment()
+        cfrag.arguments = c
+        //
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_fragment, frag)
+            .commit()
+
+        description.isClickable = true
+        description.setOnClickListener {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_fragment, frag)
+                .commit()
+
+        }
+        review.isClickable = true
+        review.setOnClickListener {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main_fragment, cfrag)
+                .commit()
+        }
+
+        var url = activityThatCalled.extras?.getString("applyURL")
+        if (!url.isNullOrEmpty()) {
+            url = Html.fromHtml(url).toString()
+        }
+        apply.setOnClickListener {
+            val applyIntent = Intent(Intent.ACTION_VIEW)
+            applyIntent.data = Uri.parse(url)
+            startActivity(applyIntent)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

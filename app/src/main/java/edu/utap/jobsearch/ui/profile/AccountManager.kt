@@ -33,8 +33,12 @@ class AccountManager : AppCompatActivity() {
         val username = findViewById<TextView>(R.id.username)
         val activityThatCalled = intent
         username.text = activityThatCalled.extras?.getString("username")
+        val pictureUUID = activityThatCalled.extras?.getString("pictureUUID")
         val ownerUid = activityThatCalled.extras?.getString("ownerUid")
         val photo = findViewById<ImageView>(R.id.photo)
+        if (!pictureUUID.isNullOrEmpty()) {
+            viewModel.glideFetch(pictureUUID.toString(), photo)
+        }
         viewModel.setPhotoIntent(::takePhotoIntent)
         photo.setOnClickListener {
             viewModel.takePhoto {
@@ -127,5 +131,10 @@ class AccountManager : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

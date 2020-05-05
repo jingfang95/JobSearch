@@ -73,6 +73,7 @@ class ProfileFragment : Fragment() {
                     user = result[0]
                     if (!user.pictureUUID.isNullOrEmpty()) {
                         viewModel.glideFetch(user.pictureUUID.toString(), photo)
+                        pictureUUID = user.pictureUUID.toString()
                     }
                     if (!user.institution.isNullOrEmpty()) {
                         institution.text = user.institution.toString()
@@ -83,9 +84,9 @@ class ProfileFragment : Fragment() {
         val account = root.findViewById<Button>(R.id.account)
         val s1 = SpannableStringBuilder().bold { scale(1.2f) { append("Account") } }.append("\nSet profile preferences to improve recommendations")
         account.text = s1
-        val jobs = root.findViewById<Button>(R.id.jobs)
-        val s2 = SpannableStringBuilder().bold { scale(1.2f) { append("Jobs") } }.append("\nView jobs you've applied")
-        jobs.text = s2
+//        val jobs = root.findViewById<Button>(R.id.jobs)
+//        val s2 = SpannableStringBuilder().bold { scale(1.2f) { append("Jobs") } }.append("\nView jobs you've applied")
+//        jobs.text = s2
         val reviews = root.findViewById<Button>(R.id.reviews)
         val s3 = SpannableStringBuilder().bold { scale(1.2f) { append("Reviews") } }.append("\nSee reviews you've posted")
         reviews.text = s3
@@ -93,6 +94,13 @@ class ProfileFragment : Fragment() {
         account.setOnClickListener {
             val intent = Intent(activity, AccountManager::class.java)
             intent.putExtra("username", username.text)
+            intent.putExtra("ownerUid", viewModel.myUid())
+            intent.putExtra("pictureUUID", pictureUUID)
+            startActivity(intent)
+        }
+
+        reviews.setOnClickListener {
+            val intent = Intent(activity, ReviewManager::class.java)
             intent.putExtra("ownerUid", viewModel.myUid())
             startActivity(intent)
         }

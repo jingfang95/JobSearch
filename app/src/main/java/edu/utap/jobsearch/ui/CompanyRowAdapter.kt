@@ -46,7 +46,7 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
         private var title = itemView.findViewById<TextView>(R.id.title)
         private var company = itemView.findViewById<TextView>(R.id.company)
         private var location = itemView.findViewById<TextView>(R.id.location)
-        private var date = itemView.findViewById<TextView>(R.id.date)
+//        private var date = itemView.findViewById<TextView>(R.id.date)
         private var companyLogo = itemView.findViewById<ImageView>(R.id.companyLogo)
         private var rowFav = itemView.findViewById<ImageView>(R.id.rowFav)
         init {
@@ -72,13 +72,16 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
             // do one company
             if (item == null) return
             title.text = item.title
+            if (item.title?.length ?: 0 > 25) {
+                title.text = item.title?.substring(0, 20) + "..."
+            }
             company.text = item.company
             location.text = item.location
             // Fri Apr 24 20:44:12 UTC 2020
 //            val formatter = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
 //            val postDate = formatter.parse(item.date.toString())
 //            val current = getRelativeDateTimeString(this.itemView.context, postDate, Calendar.getInstance(UTC).timeInMillis, DAY_IN_MILLIS,0)
-            date.text = item.date
+//            date.text = item.date
 
             // set image
             if (!item.company_logo.isNullOrEmpty()) {

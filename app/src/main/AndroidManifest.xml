@@ -40,7 +40,13 @@
         </activity>
         <activity
             android:name=".ui.profile.AccountManager"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:label="Account">
+        </activity>
+        <activity
+            android:name=".ui.profile.ReviewManager"
+            android:parentActivityName=".MainActivity"
+            android:label="Review">
         </activity>
     </application>
 
