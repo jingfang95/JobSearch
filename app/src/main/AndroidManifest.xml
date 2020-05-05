@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AuthInitActivity"> </activity>
         <activity android:name=".ui.home.OneCompany"
             android:parentActivityName=".MainActivity" >
         </activity>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "341494491374",
+    "firebase_url": "https://jobsearch-5333a.firebaseio.com",
+    "project_id": "jobsearch-5333a",
+    "storage_bucket": "jobsearch-5333a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341494491374:android:331932c67e53a0bfe1abff",
+        "android_client_info": {
+          "package_name": "edu.utap.jobsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341494491374-au4e2jt53ab27c594i5dcqa73lp2jnfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.utap.jobsearch",
+            "certificate_hash": "1a49c4843a9a7dc77b39b3e99981708dc6338cb6"
+          }
+        },
+        {
+          "client_id": "341494491374-8dqne12umg9s56g6mk0rtk9a2jhv37s2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0wjS8cebutwBFf6QJ-092ULOI9vJToio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341494491374-8dqne12umg9s56g6mk0rtk9a2jhv37s2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

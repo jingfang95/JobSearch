@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.utap.jobsearch.R
 import edu.utap.jobsearch.ui.CompanyRowAdapter
-import edu.utap.jobsearch.ui.MainViewModel
+import edu.utap.jobsearch.MainViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var adapter: CompanyRowAdapter

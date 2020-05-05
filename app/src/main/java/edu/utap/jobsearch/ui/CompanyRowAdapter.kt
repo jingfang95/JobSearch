@@ -24,6 +24,7 @@ import edu.utap.jobsearch.api.JobPost
 import okhttp3.internal.UTC
 import java.text.SimpleDateFormat
 import java.util.*
+import edu.utap.jobsearch.MainViewModel
 
 class CompanyRowAdapter(private val viewModel: MainViewModel)
     : ListAdapter<JobPost, CompanyRowAdapter.VH>(JobDiff()) {
