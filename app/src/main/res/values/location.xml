@@ -1,0 +1,12 @@
+<resources>
+    <string-array name="location">
+        <item>"Location"</item>
+        <item>Amsterdam</item>
+        <item>Dallas</item>
+        <item>Denver</item>
+        <item>Houston</item>
+        <item>New York</item>
+        <item>San Francisco</item>
+        <item>Victoria</item>
+    </string-array>
+</resources>

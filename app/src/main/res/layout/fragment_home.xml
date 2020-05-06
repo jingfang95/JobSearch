@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -35,10 +36,11 @@
             android:hint="Job Title, Keywords, or Company"
             android:imeOptions="actionSearch" />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_filter_black_24dp" />-->
+        <ImageButton
+            android:id="@+id/filterSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_filter_black_24dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

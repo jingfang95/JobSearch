@@ -63,6 +63,24 @@ data class JobPost (
         return isFound
     }
 
+    fun searchForLocation(searchTerm: String): Boolean {
+        var isFound = false
+        if (location != null && setSpan(location, searchTerm)) {
+            isFound = true
+        }
+        removeAllCurrentSpans()
+        return isFound
+    }
+
+    fun searchForType(searchTerm: String): Boolean {
+        var isFound = false
+        if (type != null && setSpan(type, searchTerm)) {
+            isFound = true
+        }
+        removeAllCurrentSpans()
+        return isFound
+    }
+
     override fun equals(other: Any?): Boolean =
         if (other is JobPost) {
             key == other.key

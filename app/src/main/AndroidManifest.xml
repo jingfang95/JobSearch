@@ -38,6 +38,9 @@
         <activity android:name=".ui.home.OneCompany"
             android:parentActivityName=".MainActivity" >
         </activity>
+        <activity android:name=".ui.home.FilterManager"
+            android:parentActivityName=".MainActivity" >
+        </activity>
         <activity
             android:name=".ui.profile.AccountManager"
             android:parentActivityName=".MainActivity"

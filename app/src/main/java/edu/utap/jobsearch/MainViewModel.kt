@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -37,6 +38,8 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
     private var storageDir =
         getApplication<Application>().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     var searchTerm = MutableLiveData<String>()
+    var searchLocation = MutableLiveData<String>()
+    var searchType = MutableLiveData<String>()
     private val api = JobApi.create()
     private val repository = JobPostRepository(api)
     private val data = MutableLiveData<List<JobPost>>()
@@ -87,6 +90,21 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
             val searchResult = mutableListOf<JobPost>()
             for (post in jobPosts) {
                 if (post.searchFor(searchTerm.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+            data.postValue(searchResult)
+        }
+    }
+
+    fun searchPostsForFilter() {
+        viewModelScope.launch (
+            context = viewModelScope.coroutineContext + Dispatchers.IO
+        ){
+            val jobPosts = repository.getPosts()
+            val searchResult = mutableListOf<JobPost>()
+            for (post in jobPosts) {
+                if (post.searchForLocation(searchLocation.value.toString()) && post.searchForType(searchType.value.toString())) {
                     searchResult.add(post)
                 }
             }

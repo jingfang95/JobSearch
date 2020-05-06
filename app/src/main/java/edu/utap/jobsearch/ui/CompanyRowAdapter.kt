@@ -72,7 +72,7 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
             // do one company
             if (item == null) return
             title.text = item.title
-            if (item.title?.length ?: 0 > 25) {
+            if (item.title?.length ?: 0 > 20) {
                 title.text = item.title?.substring(0, 20) + "..."
             }
             company.text = item.company
