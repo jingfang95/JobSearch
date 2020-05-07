@@ -24,9 +24,9 @@ class ReviewRowAdapter(private val viewModel: MainViewModel)
 
         override fun areContentsTheSame(oldItem: ReviewRow, newItem: ReviewRow): Boolean {
             return oldItem.name == newItem.name
-                    && oldItem.type == oldItem.type
-                    && oldItem.title == oldItem.title
-                    && oldItem.description == oldItem.description
+                    && oldItem.type == newItem.type
+                    && oldItem.title == newItem.title
+                    && oldItem.description == newItem.description
         }
     }
 

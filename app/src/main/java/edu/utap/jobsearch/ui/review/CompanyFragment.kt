@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.utap.jobsearch.MainViewModel
 import edu.utap.jobsearch.R
 import edu.utap.jobsearch.ReviewRow
+import java.util.*
 
 class CompanyFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -93,6 +95,7 @@ class CompanyFragment : Fragment() {
                 "ownerUid" to viewModel.myUid(),
                 "description" to description.text.toString(),
                 "comment" to comment.text.toString(),
+                "timeStamp" to Timestamp(Date()),
                 "rowID" to review.rowID
             )
             db.collection("review").document(review.rowID)

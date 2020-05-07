@@ -30,15 +30,11 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".AuthInitActivity"> </activity>
         <activity android:name=".ui.home.OneCompany"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity android:name=".ui.home.FilterManager"
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
@@ -47,9 +43,14 @@
             android:label="Account">
         </activity>
         <activity
+            android:name=".ui.profile.JobManager"
+            android:parentActivityName=".MainActivity"
+            android:label="Applied Jobs">
+        </activity>
+        <activity
             android:name=".ui.profile.ReviewManager"
             android:parentActivityName=".MainActivity"
-            android:label="Review">
+            android:label="Reviews">
         </activity>
     </application>
 

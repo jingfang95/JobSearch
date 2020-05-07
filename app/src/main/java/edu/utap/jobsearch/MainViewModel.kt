@@ -290,9 +290,11 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
     }
 
     companion object {
-        fun doOnePost(context: Context, jobPost: JobPost) {
+        fun doOnePost(context: Context, jobPost: JobPost, ownerID: String?) {
             val onePostIntent = Intent(context, OneCompany::class.java)
             onePostIntent.apply {
+                putExtra("ownerID", ownerID.toString())
+                putExtra("postID", jobPost.key)
                 putExtra("postCompany", jobPost.company.toString())
                 putExtra("postTitle", jobPost.title.toString())
                 putExtra("postLocation", jobPost.location.toString())

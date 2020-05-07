@@ -49,11 +49,12 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
 //        private var date = itemView.findViewById<TextView>(R.id.date)
         private var companyLogo = itemView.findViewById<ImageView>(R.id.companyLogo)
         private var rowFav = itemView.findViewById<ImageView>(R.id.rowFav)
+        private val ownerID = viewModel.myUid()
         init {
             companyCard.setOnClickListener {
                 Log.d("tag", "title has been clicked")
                 val position = adapterPosition
-                MainViewModel.doOnePost(it.context, getItem(position))
+                MainViewModel.doOnePost(it.context, getItem(position), ownerID)
             }
 
             rowFav.setOnClickListener {

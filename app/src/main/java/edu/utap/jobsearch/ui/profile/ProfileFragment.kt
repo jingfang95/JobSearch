@@ -84,9 +84,9 @@ class ProfileFragment : Fragment() {
         val account = root.findViewById<Button>(R.id.account)
         val s1 = SpannableStringBuilder().bold { scale(1.2f) { append("Account") } }.append("\nSet profile preferences to improve recommendations")
         account.text = s1
-//        val jobs = root.findViewById<Button>(R.id.jobs)
-//        val s2 = SpannableStringBuilder().bold { scale(1.2f) { append("Jobs") } }.append("\nView jobs you've applied")
-//        jobs.text = s2
+        val jobs = root.findViewById<Button>(R.id.jobs)
+        val s2 = SpannableStringBuilder().bold { scale(1.2f) { append("Jobs") } }.append("\nView jobs you've applied")
+        jobs.text = s2
         val reviews = root.findViewById<Button>(R.id.reviews)
         val s3 = SpannableStringBuilder().bold { scale(1.2f) { append("Reviews") } }.append("\nSee reviews you've posted")
         reviews.text = s3
@@ -96,6 +96,12 @@ class ProfileFragment : Fragment() {
             intent.putExtra("username", username.text)
             intent.putExtra("ownerUid", viewModel.myUid())
             intent.putExtra("pictureUUID", pictureUUID)
+            startActivity(intent)
+        }
+
+        jobs.setOnClickListener {
+            val intent = Intent(activity, JobManager::class.java)
+            intent.putExtra("ownerUid", viewModel.myUid())
             startActivity(intent)
         }
 
