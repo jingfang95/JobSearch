@@ -15,10 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.utap.jobsearch.R
 import edu.utap.jobsearch.api.JobApi
 import edu.utap.jobsearch.api.JobPost
@@ -52,6 +54,10 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
     // parcelable error if we try to store them into a SavedStateHandle
     private val photoSuccessKey = "photoSuccessKey"
     private val takePhotoIntentKey = "takePhotoIntentKey"
+
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private lateinit var savedJob : SaveRow
+    private var jobs = MutableLiveData<List<SaveRow>>()
 
     private lateinit var crashMe: String
     private fun noPhoto() {
@@ -193,6 +199,43 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
     }
 
     // fav
+    fun initFav(ownerID: String) {
+        val localList = favPosts.value?.toMutableList()
+        db.collection("save")
+            .whereEqualTo("ownerUid", ownerID)
+            .addSnapshotListener { querySnapshot, ex ->
+                if (ex != null) {
+                    return@addSnapshotListener
+                }
+                if (querySnapshot != null) {
+                    jobs.value = querySnapshot.documents.mapNotNull {
+                        Log.d("checked", String.format("not null"))
+                        it.toObject(SaveRow::class.java)
+                    }
+
+                }
+            }
+        viewModelScope.launch (
+            context = viewModelScope.coroutineContext + Dispatchers.IO
+        ) {
+            val jobPosts = repository.getPosts()
+            if (jobs.value != null) {
+                for (job in jobs.value?.toMutableList()!!) {
+                    for (target in jobPosts) {
+                        if (target.key == job.id) {
+                            if (!isFav(target)) {
+                                localList?.let {
+                                    it.add(target)
+                                    favPosts.value = it }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
     fun observeFav(): LiveData<List<JobPost>> {
         return favPosts
     }

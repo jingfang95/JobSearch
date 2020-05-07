@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import edu.utap.jobsearch.glide.Glide
 import edu.utap.jobsearch.R
 import edu.utap.jobsearch.api.JobPost
@@ -25,6 +27,7 @@ import okhttp3.internal.UTC
 import java.text.SimpleDateFormat
 import java.util.*
 import edu.utap.jobsearch.MainViewModel
+import edu.utap.jobsearch.SaveRow
 
 class CompanyRowAdapter(private val viewModel: MainViewModel)
     : ListAdapter<JobPost, CompanyRowAdapter.VH>(JobDiff()) {
@@ -50,6 +53,9 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
         private var companyLogo = itemView.findViewById<ImageView>(R.id.companyLogo)
         private var rowFav = itemView.findViewById<ImageView>(R.id.rowFav)
         private val ownerID = viewModel.myUid()
+
+        private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+        private lateinit var savedJob : SaveRow
         init {
             companyCard.setOnClickListener {
                 Log.d("tag", "title has been clicked")
@@ -62,8 +68,62 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
 
                 if (viewModel.isFav(getItem(position))) {
                     viewModel.removeFav(getItem(position))
+                    // find
+                    db.collection("save")
+                        .whereEqualTo("ownerUid", ownerID)
+                        .whereEqualTo("id", getItem(position).key)
+                        .addSnapshotListener { querySnapshot, ex ->
+                            if (ex != null) {
+                                return@addSnapshotListener
+                            }
+                            val result = querySnapshot!!.documents.mapNotNull {
+                                it.toObject(SaveRow::class.java)
+                            }
+                            if (!result.isNullOrEmpty()) {
+                                Log.d("Find job", "saved job")
+                                savedJob = result[0]
+                            }
+                        }
+                    // delete
+                    db.collection("save").document(savedJob.rowID).delete()
+                        .addOnSuccessListener {
+                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+                            Log.w(javaClass.simpleName, "Error deleting document", e)
+                        }
                 } else {
                     viewModel.addFav(getItem(position))
+                    // add
+                    savedJob = SaveRow().apply {
+                        id = getItem(position).key
+                    }
+                    savedJob.rowID = db.collection("job").document().id
+                    val jobInfo = hashMapOf(
+                        "id" to getItem(position).key,
+//                        "type" to getItem(position).type,
+//                        "created_at" to getItem(position).date,
+//                        "company" to getItem(position).company,
+                        "ownerUid" to ownerID,
+//                        "company_url" to getItem(position).company_url,
+//                        "location" to getItem(position).location,
+//                        "title" to getItem(position).title,
+//                        "company_logo" to getItem(position).company_logo,
+//                        "description" to getItem(position).description,
+//                        "apply_url" to getItem(position).apply_url,
+                        "timeStamp" to Timestamp(Date()),
+                        "rowID" to savedJob.rowID
+                    )
+                    db.collection("save").document(savedJob.rowID)
+                        .set(jobInfo)
+                        .addOnSuccessListener {
+                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+                            Log.w(javaClass.simpleName, "Error deleting document", e)
+                        }
                 }
                 notifyItemChanged(position)
             }

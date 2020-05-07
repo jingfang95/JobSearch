@@ -41,6 +41,7 @@ class SavedFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_saved, container, false)
         initRecyclerView(root)
+        viewModel.initFav(viewModel.myUid().toString())
         viewModel.observeFav().observe(viewLifecycleOwner,
             Observer {
                 adapter.submitList(it)
