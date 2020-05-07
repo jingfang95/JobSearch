@@ -41,7 +41,7 @@ class JobManager : AppCompatActivity() {
         initRecyclerView()
         db.collection("job")
             .whereEqualTo("ownerUid", ownerUid)
-            .orderBy("timeStamp", Query.Direction.ASCENDING)
+            .orderBy("timeStamp", Query.Direction.DESCENDING)
             .limit(100)
             .addSnapshotListener { querySnapshot, ex ->
                 if (ex != null) {

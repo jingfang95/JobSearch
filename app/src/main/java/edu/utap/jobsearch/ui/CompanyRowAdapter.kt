@@ -66,66 +66,51 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
             rowFav.setOnClickListener {
                 val position = adapterPosition
 
-                if (viewModel.isFav(getItem(position))) {
-                    viewModel.removeFav(getItem(position))
-                    // find
-                    db.collection("save")
-                        .whereEqualTo("ownerUid", ownerID)
-                        .whereEqualTo("id", getItem(position).key)
-                        .addSnapshotListener { querySnapshot, ex ->
-                            if (ex != null) {
-                                return@addSnapshotListener
-                            }
-                            val result = querySnapshot!!.documents.mapNotNull {
-                                it.toObject(SaveRow::class.java)
-                            }
-                            if (!result.isNullOrEmpty()) {
-                                Log.d("Find job", "saved job")
-                                savedJob = result[0]
-                            }
-                        }
-                    // delete
-                    db.collection("save").document(savedJob.rowID).delete()
-                        .addOnSuccessListener {
-                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
-                            Log.w(javaClass.simpleName, "Error deleting document", e)
-                        }
-                } else {
-                    viewModel.addFav(getItem(position))
-                    // add
-                    savedJob = SaveRow().apply {
-                        id = getItem(position).key
-                    }
-                    savedJob.rowID = db.collection("job").document().id
-                    val jobInfo = hashMapOf(
-                        "id" to getItem(position).key,
-//                        "type" to getItem(position).type,
-//                        "created_at" to getItem(position).date,
-//                        "company" to getItem(position).company,
-                        "ownerUid" to ownerID,
-//                        "company_url" to getItem(position).company_url,
-//                        "location" to getItem(position).location,
-//                        "title" to getItem(position).title,
-//                        "company_logo" to getItem(position).company_logo,
-//                        "description" to getItem(position).description,
-//                        "apply_url" to getItem(position).apply_url,
-                        "timeStamp" to Timestamp(Date()),
-                        "rowID" to savedJob.rowID
-                    )
-                    db.collection("save").document(savedJob.rowID)
-                        .set(jobInfo)
-                        .addOnSuccessListener {
-                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
-                            Log.w(javaClass.simpleName, "Error deleting document", e)
-                        }
-                }
-                notifyItemChanged(position)
+//                if (viewModel.isFav(getItem(position))) {
+//                    viewModel.removeFav(getItem(position))
+//                    // delete
+//                    db.collection("save").document(savedJob.rowID).delete()
+//                        .addOnSuccessListener {
+//                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+//                        }
+//                        .addOnFailureListener { e ->
+//                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+//                            Log.w(javaClass.simpleName, "Error deleting document", e)
+//                        }
+//
+//                } else {
+//                    viewModel.addFav(getItem(position))
+//                    // add
+//                    savedJob = SaveRow().apply {
+//                        id = getItem(position).key
+//                    }
+//                    savedJob.rowID = db.collection("save").document().id
+//                    val jobInfo = hashMapOf(
+//                        "id" to getItem(position).key,
+////                        "type" to getItem(position).type,
+////                        "created_at" to getItem(position).date,
+////                        "company" to getItem(position).company,
+//                        "ownerUid" to ownerID,
+////                        "company_url" to getItem(position).company_url,
+////                        "location" to getItem(position).location,
+////                        "title" to getItem(position).title,
+////                        "company_logo" to getItem(position).company_logo,
+////                        "description" to getItem(position).description,
+////                        "apply_url" to getItem(position).apply_url,
+//                        "timeStamp" to Timestamp(Date()),
+//                        "rowID" to savedJob.rowID
+//                    )
+//                    db.collection("save").document(savedJob.rowID)
+//                        .set(jobInfo)
+//                        .addOnSuccessListener {
+//                            Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+//                        }
+//                        .addOnFailureListener { e ->
+//                            Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+//                            Log.w(javaClass.simpleName, "Error deleting document", e)
+//                        }
+//                }
+//                notifyItemChanged(position)
             }
         }
 
@@ -148,11 +133,69 @@ class CompanyRowAdapter(private val viewModel: MainViewModel)
             if (!item.company_logo.isNullOrEmpty()) {
                 Glide.glideFetch(item.company_logo, companyLogo)
             }
-            if (viewModel.isFav(item)) {
-                rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
-            } else {
-                rowFav.setImageResource(R.drawable.ic_favorite_border_24dp)
-            }
+//            if (viewModel.isFav(item)) {
+//                rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+//            } else {
+//                rowFav.setImageResource(R.drawable.ic_favorite_border_24dp)
+//            }
+            db.collection("save")
+                .whereEqualTo("ownerUid", ownerID)
+                .whereEqualTo("id", item.key)
+                .addSnapshotListener { querySnapshot, ex ->
+                    if (ex != null) {
+                        return@addSnapshotListener
+                    }
+                    val result = querySnapshot!!.documents.mapNotNull {
+                        it.toObject(SaveRow::class.java)
+                    }
+                    if (!result.isNullOrEmpty()) {
+                        Log.d("Find job", "saved job")
+                        savedJob = result[0]
+                        rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+                        rowFav.setOnClickListener {
+                            db.collection("save").document(savedJob.rowID).delete()
+                                .addOnSuccessListener {
+                                    Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+                                    Log.w(javaClass.simpleName, "Error deleting document", e)
+                                }
+                            rowFav.setImageResource(R.drawable.ic_favorite_border_24dp)
+                        }
+                    } else {
+                        rowFav.setImageResource(R.drawable.ic_favorite_border_24dp)
+                        rowFav.setOnClickListener {
+                            savedJob = SaveRow().apply {
+                                id = item.key
+                            }
+                            savedJob.rowID = db.collection("save").document().id
+                            val jobInfo = hashMapOf(
+                                "id" to item.key,
+                                "company" to item.company.toString(),
+                                "ownerUid" to ownerID,
+                                "location" to item.location.toString(),
+                                "title" to item.title.toString(),
+                                "company_logo" to item.company_logo,
+                                "apply_url" to item.apply_url,
+                                "timeStamp" to Timestamp(Date()),
+                                "rowID" to savedJob.rowID
+                            )
+                            db.collection("save").document(savedJob.rowID)
+                                .set(jobInfo)
+                                .addOnSuccessListener {
+                                    Log.d(javaClass.simpleName, "Deleted ${savedJob.rowID}")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.d(javaClass.simpleName, "Delete FAILED of ${savedJob.rowID}")
+                                    Log.w(javaClass.simpleName, "Error deleting document", e)
+                                }
+                            rowFav.setImageResource(R.drawable.ic_favorite_black_24dp)
+                        }
+
+                    }
+                }
+
         }
     }
 

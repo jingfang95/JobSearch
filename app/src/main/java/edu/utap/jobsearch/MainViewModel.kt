@@ -198,68 +198,6 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
         FirebaseAuth.getInstance().signOut()
     }
 
-    // fav
-    fun initFav(ownerID: String) {
-        val localList = favPosts.value?.toMutableList()
-        db.collection("save")
-            .whereEqualTo("ownerUid", ownerID)
-            .addSnapshotListener { querySnapshot, ex ->
-                if (ex != null) {
-                    return@addSnapshotListener
-                }
-                if (querySnapshot != null) {
-                    jobs.value = querySnapshot.documents.mapNotNull {
-                        Log.d("checked", String.format("not null"))
-                        it.toObject(SaveRow::class.java)
-                    }
-
-                }
-            }
-        viewModelScope.launch (
-            context = viewModelScope.coroutineContext + Dispatchers.IO
-        ) {
-            val jobPosts = repository.getPosts()
-            if (jobs.value != null) {
-                for (job in jobs.value?.toMutableList()!!) {
-                    for (target in jobPosts) {
-                        if (target.key == job.id) {
-                            if (!isFav(target)) {
-                                localList?.let {
-                                    it.add(target)
-                                    favPosts.value = it }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-    fun observeFav(): LiveData<List<JobPost>> {
-        return favPosts
-    }
-
-    fun addFav(postRec: JobPost) {
-        val localList = favPosts.value?.toMutableList()
-        localList?.let {
-            it.add(postRec)
-            favPosts.value = it
-        }
-    }
-
-    fun removeFav(postRec: JobPost) {
-        val localList = favPosts.value?.toMutableList()
-        localList?.let {
-            it.remove(postRec)
-            favPosts.value = it
-        }
-    }
-
-    fun isFav(postRec: JobPost): Boolean {
-        return favPosts.value?.contains(postRec)?: false
-    }
-
     // photo
     fun setPhotoIntent(_takePhotoIntent: () -> Unit) {
         takePhotoIntent = _takePhotoIntent
