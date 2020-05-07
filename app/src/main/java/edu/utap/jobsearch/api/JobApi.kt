@@ -22,6 +22,15 @@ interface JobApi {
     @GET("/positions.json")
     suspend fun getPosts(): List<JobPost>
 
+    @GET("/positions.json?page=2")
+    suspend fun getPostsPage2(): List<JobPost>
+
+    @GET("/positions.json?page=3")
+    suspend fun getPostsPage3(): List<JobPost>
+
+    @GET("/positions.json?page=4")
+    suspend fun getPostsPage4(): List<JobPost>
+
 //    data class ListingResponse(val data: List<JobPost>)
 
     class SpannableDeserializer : JsonDeserializer<SpannableString> {

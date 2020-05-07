@@ -25,4 +25,16 @@ class JobPostRepository(private val jobApi: JobApi) {
         return jobApi.getPosts()
     }
 
+    suspend fun getPostsPage2(): List<JobPost> {
+        return jobApi.getPostsPage2()
+    }
+
+    suspend fun getPostsPage3(): List<JobPost> {
+        return jobApi.getPostsPage3()
+    }
+
+    suspend fun getPostsPage4(): List<JobPost> {
+        return jobApi.getPostsPage4()
+    }
+
 }

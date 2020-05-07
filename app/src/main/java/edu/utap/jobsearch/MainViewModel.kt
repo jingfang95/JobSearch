@@ -78,7 +78,27 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
         viewModelScope.launch (
             context = viewModelScope.coroutineContext + Dispatchers.IO
         ){
-            data.postValue(repository.getPosts())
+            val getResult = mutableListOf<JobPost>()
+            var jobPosts = repository.getPosts()
+            for (post in jobPosts) {
+                getResult.add(post)
+            }
+            jobPosts = repository.getPostsPage2()
+            for (post in jobPosts) {
+                getResult.add(post)
+            }
+
+            jobPosts = repository.getPostsPage3()
+            for (post in jobPosts) {
+                getResult.add(post)
+            }
+
+            jobPosts = repository.getPostsPage4()
+            for (post in jobPosts) {
+                getResult.add(post)
+            }
+
+            data.postValue(getResult)
         }
     }
 
@@ -86,13 +106,35 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
         viewModelScope.launch (
             context = viewModelScope.coroutineContext + Dispatchers.IO
         ){
-            val jobPosts = repository.getPosts()
+            var jobPosts = repository.getPosts()
             val searchResult = mutableListOf<JobPost>()
             for (post in jobPosts) {
                 if (post.searchFor(searchTerm.value.toString())) {
                     searchResult.add(post)
                 }
             }
+
+            jobPosts = repository.getPostsPage2()
+            for (post in jobPosts) {
+                if (post.searchFor(searchTerm.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
+            jobPosts = repository.getPostsPage3()
+            for (post in jobPosts) {
+                if (post.searchFor(searchTerm.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
+            jobPosts = repository.getPostsPage4()
+            for (post in jobPosts) {
+                if (post.searchFor(searchTerm.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
             data.postValue(searchResult)
         }
     }
@@ -101,13 +143,35 @@ class MainViewModel(application: Application, private val state: SavedStateHandl
         viewModelScope.launch (
             context = viewModelScope.coroutineContext + Dispatchers.IO
         ){
-            val jobPosts = repository.getPosts()
+            var jobPosts = repository.getPosts()
             val searchResult = mutableListOf<JobPost>()
             for (post in jobPosts) {
                 if (post.searchForLocation(searchLocation.value.toString()) && post.searchForType(searchType.value.toString())) {
                     searchResult.add(post)
                 }
             }
+
+            jobPosts = repository.getPostsPage2()
+            for (post in jobPosts) {
+                if (post.searchForLocation(searchLocation.value.toString()) && post.searchForType(searchType.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
+            jobPosts = repository.getPostsPage3()
+            for (post in jobPosts) {
+                if (post.searchForLocation(searchLocation.value.toString()) && post.searchForType(searchType.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
+            jobPosts = repository.getPostsPage4()
+            for (post in jobPosts) {
+                if (post.searchForLocation(searchLocation.value.toString()) && post.searchForType(searchType.value.toString())) {
+                    searchResult.add(post)
+                }
+            }
+
             data.postValue(searchResult)
         }
     }
