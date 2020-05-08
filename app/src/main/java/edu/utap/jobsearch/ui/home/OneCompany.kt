@@ -13,10 +13,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,6 +25,7 @@ import edu.utap.jobsearch.JobRow
 import edu.utap.jobsearch.R
 import edu.utap.jobsearch.glide.Glide
 import kotlinx.android.synthetic.main.one_company.*
+import java.io.IOException
 import java.util.*
 
 class OneCompany: AppCompatActivity() {
@@ -120,16 +118,30 @@ class OneCompany: AppCompatActivity() {
         }
 
         var url = activityThatCalled.extras?.getString("applyURL")
+        var checked = ""
         if (!url.isNullOrEmpty()) {
             url = Html.fromHtml(url).toString()
+            val index = url.indexOf("https://")
+            if (index > -1) {
+                checked = url.substring(index)
+            }
         }
+
         apply.setOnClickListener {
             if (!isApplied) {
                 // apply
-                val applyIntent = Intent(Intent.ACTION_VIEW)
-                applyIntent.data = Uri.parse(url)
-                val resultCode = 1
-                startActivityForResult(applyIntent, resultCode)
+                if (checked.isNullOrEmpty()) {
+                    Toast.makeText(this, "No Link Provided", Toast.LENGTH_SHORT).show()
+                } else {
+                    val applyIntent = Intent(Intent.ACTION_VIEW)
+                    val resultCode = 1
+                    try {
+                        applyIntent.data = Uri.parse(checked)
+                        startActivityForResult(applyIntent, resultCode)
+                    } catch (e: IOException) {
+                        Toast.makeText(this, "This Link cannot work!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
                 // withdrawal
                 apply.text = "Apply Now"
